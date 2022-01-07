@@ -118,7 +118,7 @@ RSpec.describe Museum do
     expect(dmns.patrons).to eq([patron_1, patron_2, patron_3])
   end
 
-  xit "returns patrons by their exhibit of interest" do
+  it "returns patrons by their exhibit of interest" do
     dmns = Museum.new("Denver Museum of Nature and Science")
 
     gems_and_minerals = Exhibit.new({name: "Gems and Minerals", cost: 0})
@@ -130,7 +130,7 @@ RSpec.describe Museum do
     dmns.add_exhibit(imax)
     dmns.exhibits
 
-    patron_1 = Patron.new("Bob", 20)
+    patron_1 = Patron.new("Bob", 0)
     patron_1.add_interest("Gems and Minerals")
     patron_1.add_interest("Dead Sea Scrolls")
 
@@ -146,15 +146,14 @@ RSpec.describe Museum do
 
     dmns.patrons_by_exhibit_interest
 
-    expect(dmns.patrons_by_exhibit_interest).to
-    eq({
+    expect(dmns.patrons_by_exhibit_interest).to eq({
         gems_and_minerals => [patron_1],
         dead_sea_scrolls  => [patron_1, patron_2, patron_3],
         imax              => []
       })
   end
 
-  xit "returns eligible lottery contestants" do
+  it "returns eligible lottery contestants" do
     dmns = Museum.new("Denver Museum of Nature and Science")
 
     gems_and_minerals = Exhibit.new({name: "Gems and Minerals", cost: 0})
@@ -166,7 +165,7 @@ RSpec.describe Museum do
     dmns.add_exhibit(imax)
     dmns.exhibits
 
-    patron_1 = Patron.new("Bob", 20)
+    patron_1 = Patron.new("Bob", 0)
     patron_1.add_interest("Gems and Minerals")
     patron_1.add_interest("Dead Sea Scrolls")
 
@@ -184,11 +183,11 @@ RSpec.describe Museum do
 
     dmns.ticket_lottery_contestants(dead_sea_scrolls)
 
-    expect(dmns.ticket_lottery_contestants(dead_sea_scrolls)).to
-    eq([patron_1, patron_2, patron_3])
+    expect(dmns.ticket_lottery_contestants(dead_sea_scrolls)).to eq([patron_1,
+      patron_3])
   end
 
-  xit "can draw a lottery winner with valid contestants" do
+  it "can draw a lottery winner with valid contestants" do
     dmns = Museum.new("Denver Museum of Nature and Science")
 
     gems_and_minerals = Exhibit.new({name: "Gems and Minerals", cost: 0})
@@ -200,7 +199,7 @@ RSpec.describe Museum do
     dmns.add_exhibit(imax)
     dmns.exhibits
 
-    patron_1 = Patron.new("Bob", 20)
+    patron_1 = Patron.new("Bob", 0)
     patron_1.add_interest("Gems and Minerals")
     patron_1.add_interest("Dead Sea Scrolls")
 
@@ -219,10 +218,10 @@ RSpec.describe Museum do
     dmns.ticket_lottery_contestants(dead_sea_scrolls)
 
     dmns.draw_lottery_winner(dead_sea_scrolls)
-    expect(dmns.draw_lottery_winner(dead_sea_scrolls)).to eq(patron_1 || patron_2)
+    expect(dmns.draw_lottery_winner(dead_sea_scrolls)).to eq(patron_1).or eq(patron_3)
   end
 
-  xit "returns nil when a lottery does not have valid contestants" do
+  it "returns nil when a lottery does not have valid contestants" do
     dmns = Museum.new("Denver Museum of Nature and Science")
 
     gems_and_minerals = Exhibit.new({name: "Gems and Minerals", cost: 0})
@@ -234,7 +233,7 @@ RSpec.describe Museum do
     dmns.add_exhibit(imax)
     dmns.exhibits
 
-    patron_1 = Patron.new("Bob", 20)
+    patron_1 = Patron.new("Bob", 0)
     patron_1.add_interest("Gems and Minerals")
     patron_1.add_interest("Dead Sea Scrolls")
 
